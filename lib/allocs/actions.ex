@@ -19,7 +19,7 @@ defmodule Allocs.Actions do
     time = NaiveDateTime.local_now() |> NaiveDateTime.truncate(:second) 
     resource = Enum.find(list_resources(), &(&1.id == resource_id))
     user = Enum.find(list_users(), &(&1.id == user_id))
-    map = %{user: user.name, resource: resource.name, resource_type: resource.type, user_id: user.id, resource_id: resource.id, allocated_at: time}
+    map = %Data.Allocation{user: user.name, resource: resource.name, resource_type: resource.type, user_id: user.id, resource_id: resource.id, allocated_at: time}
     new_allocation = Map.put(map, :id, id)
     [new_allocation | all_allocations]
   end
