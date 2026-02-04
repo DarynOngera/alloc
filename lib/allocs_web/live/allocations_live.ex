@@ -37,14 +37,15 @@ defmodule AllocsWeb.AllocationsLive do
 
   def handle_event("list_allocations", _params, socket) do
     all_allocations = socket.assigns.all_allocations
-    {:noreply, assign(socket, :all_allocations, all_allocations)}
+    sorted = Enum.sort_by(all_allocations, &(&1.id), :asc)
+    {:noreply, assign(socket, :all_allocations, sorted)}
   end
 
   def handle_event("get_allocation", %{"allocation_id" => allocation_id}, socket) do
     id = String.to_integer(allocation_id)
     current_list = socket.assigns.all_allocations
-    list = Actions.get_allocation(current_list, id)
-    {:noreply, assign(socket, :all_allocations, list)}
+    allocation = Actions.get_allocation(current_list, id)
+    {:noreply, assign(socket, :all_allocations, allocation)}
 
   end
 
